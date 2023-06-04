@@ -1,7 +1,9 @@
-#include "MagicalContainer.h"
+#include "MagicalContainer.hpp"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
+
+using namespace ariel;
 
 void MagicalContainer::addElement(int element){
     int i = elements.size() - 1;
@@ -37,13 +39,13 @@ bool MagicalContainer::operator!=(const MagicalContainer &other) const
     return !(this == &other);
 }
 
-AscendingIterator::AscendingIterator(MagicalContainer &container)
+MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container)
     : container(container), currentIndex(0){}
 
-AscendingIterator::AscendingIterator(const AscendingIterator& other)
+MagicalContainer::AscendingIterator::AscendingIterator(const AscendingIterator& other)
     : container(other.container), currentIndex(other.currentIndex){}
 
-AscendingIterator& AscendingIterator::operator=(const AscendingIterator& other){
+MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(const AscendingIterator& other){
     if(this->container != other.container) throw std::runtime_error("");
     if (this != &other){
         currentIndex = other.currentIndex;
@@ -51,46 +53,46 @@ AscendingIterator& AscendingIterator::operator=(const AscendingIterator& other){
     return *this;
 }
 
-bool AscendingIterator::operator==(const AscendingIterator& other) const{
+bool MagicalContainer::AscendingIterator::operator==(const AscendingIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex == other.currentIndex;
 }
 
-bool AscendingIterator::operator!=(const AscendingIterator& other) const{
+bool MagicalContainer::AscendingIterator::operator!=(const AscendingIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return !(*this == other);
 }
 
-bool AscendingIterator::operator>(const AscendingIterator& other) const{
+bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex > other.currentIndex;
 }
 
-bool AscendingIterator::operator<(const AscendingIterator& other) const{
+bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex < other.currentIndex;
 }
 
-int AscendingIterator::operator*() const{
+int MagicalContainer::AscendingIterator::operator*() const{
     return container.getElementAt(currentIndex);
 }
 
-AscendingIterator& AscendingIterator::operator++(){
+MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator++(){
     if(currentIndex < container.size()) ++currentIndex;
     return *this;
 }
 
-AscendingIterator AscendingIterator::begin(){
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin(){
     return AscendingIterator(container);
 }
 
-AscendingIterator AscendingIterator::end(){
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end(){
     AscendingIterator iterator(container);
     iterator.currentIndex = container.size();
     return iterator;
 }
 
-PrimeIterator::PrimeIterator(MagicalContainer& container)
+MagicalContainer::PrimeIterator::PrimeIterator(MagicalContainer& container)
     : container(container){
         int i = 0;
         while(i < container.size() && !isPrime(container.getElementAt(i))){
@@ -99,10 +101,10 @@ PrimeIterator::PrimeIterator(MagicalContainer& container)
         currentIndex = i;
     }
 
-PrimeIterator::PrimeIterator(const PrimeIterator& other)
+MagicalContainer::PrimeIterator::PrimeIterator(const PrimeIterator& other)
     : container(other.container), primes(other.primes), currentIndex(other.currentIndex){}
 
-PrimeIterator& PrimeIterator::operator=(const PrimeIterator& other){
+MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator=(const PrimeIterator& other){
     if (this != &other){
         primes = other.primes;
         currentIndex = other.currentIndex;
@@ -110,31 +112,31 @@ PrimeIterator& PrimeIterator::operator=(const PrimeIterator& other){
     return *this;
 }
 
-bool PrimeIterator::operator==(const PrimeIterator& other) const{
+bool MagicalContainer::PrimeIterator::operator==(const PrimeIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex == other.currentIndex;
 }
 
-bool PrimeIterator::operator!=(const PrimeIterator& other) const{
+bool MagicalContainer::PrimeIterator::operator!=(const PrimeIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return !(*this == other);
 }
 
-bool PrimeIterator::operator>(const PrimeIterator& other) const{
+bool MagicalContainer::PrimeIterator::operator>(const PrimeIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex > other.currentIndex;
 }
 
-bool PrimeIterator::operator<(const PrimeIterator& other) const{
+bool MagicalContainer::PrimeIterator::operator<(const PrimeIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return currentIndex < other.currentIndex;
 }
 
-int PrimeIterator::operator*() const{
+int MagicalContainer::PrimeIterator::operator*() const{
     return container.getElementAt(currentIndex);
 }
 
-PrimeIterator& PrimeIterator::operator++(){
+MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator++(){
     while(currentIndex < container.size()){
         currentIndex++;
         if(!isPrime(container.getElementAt(currentIndex))) continue;
@@ -143,17 +145,17 @@ PrimeIterator& PrimeIterator::operator++(){
     return *this;
 }
 
-PrimeIterator PrimeIterator::begin(){
+MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin(){
     return PrimeIterator(container);
 }
 
-PrimeIterator PrimeIterator::end(){
+MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end(){
     PrimeIterator iterator(container);
     iterator.currentIndex = container.size();
     return iterator;
 }
 
-bool PrimeIterator::isPrime(int n)
+bool MagicalContainer::PrimeIterator::isPrime(int n)
 {   
     if(n <= 1) return false;
     if(n == 2) return true;
@@ -168,13 +170,13 @@ bool PrimeIterator::isPrime(int n)
     return true;
 }
 
-SideCrossIterator::SideCrossIterator(MagicalContainer& container)
+MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer& container)
     : container(container), forwardIndex(0), backwardIndex(container.size() - 1), turn(true){}
 
-SideCrossIterator::SideCrossIterator(const SideCrossIterator& other)
+MagicalContainer::SideCrossIterator::SideCrossIterator(const SideCrossIterator& other)
     : container(other.container), forwardIndex(other.forwardIndex), backwardIndex(other.backwardIndex), turn(true){}
 
-SideCrossIterator& SideCrossIterator::operator=(const SideCrossIterator& other){
+MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator& other){
     if (this != &other){
         forwardIndex = other.forwardIndex;
         backwardIndex = other.backwardIndex;
@@ -182,27 +184,27 @@ SideCrossIterator& SideCrossIterator::operator=(const SideCrossIterator& other){
     return *this;
 }
 
-bool SideCrossIterator::operator==(const SideCrossIterator& other) const{
+bool MagicalContainer::SideCrossIterator::operator==(const SideCrossIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return forwardIndex == other.forwardIndex && backwardIndex == other.backwardIndex;
 }
 
-bool SideCrossIterator::operator!=(const SideCrossIterator& other) const{
+bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return !(*this == other);
 }
 
-bool SideCrossIterator::operator>(const SideCrossIterator& other) const{
+bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return forwardIndex + (container.size() - 1 - backwardIndex) > other.forwardIndex + (other.container.size() - 1 - other.backwardIndex);
 }
 
-bool SideCrossIterator::operator<(const SideCrossIterator& other) const{
+bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator& other) const{
     if(this->container != other.container) throw std::runtime_error("");
     return forwardIndex + (container.size() - 1 - backwardIndex) < other.forwardIndex + (other.container.size() - 1 - other.backwardIndex);
 }
 
-int SideCrossIterator::operator*() const{
+int MagicalContainer::SideCrossIterator::operator*() const{
     if (turn){
         return container.getElementAt(forwardIndex);
     } else{
@@ -210,7 +212,7 @@ int SideCrossIterator::operator*() const{
     }
 }
 
-SideCrossIterator& SideCrossIterator::operator++(){
+MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++(){
     if(container.size() == 0) return *this;
     if(turn){
         forwardIndex++;
@@ -221,11 +223,11 @@ SideCrossIterator& SideCrossIterator::operator++(){
     return *this;
 }
 
-SideCrossIterator SideCrossIterator::begin(){
+MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin(){
     return SideCrossIterator(container);
 }
 
-SideCrossIterator SideCrossIterator::end(){
+MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end(){
     SideCrossIterator iterator(container);
 
     iterator.forwardIndex = ceil((double)container.size() / 2);

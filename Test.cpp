@@ -1,9 +1,10 @@
 #include "doctest.h"
-#include "sources/MagicalContainer.h"
+#include "sources/MagicalContainer.hpp"
 #include<iostream>
 #include<cstdlib>
 
 bool seedset = false;
+using namespace ariel;
 
 MagicalContainer createContainer(bool random = false, int size = 10){
     if(!seedset){
@@ -71,9 +72,9 @@ TEST_CASE("2. MagicalContainer removing"){
     CHECK_EQ(mc.size(), 0);
 }
 
-TEST_CASE("3. AscendingIterator iteration"){
+TEST_CASE("3. MagicalContainer::AscendingIterator iteration"){
     MagicalContainer mc = createContainer();
-    AscendingIterator ai(mc);
+    MagicalContainer::AscendingIterator ai(mc);
 
     int cnt = 0;
     for(auto it = ai.begin(); it != ai.end(); ++it){
@@ -81,9 +82,9 @@ TEST_CASE("3. AscendingIterator iteration"){
     }
 }
 
-TEST_CASE("4. SideCrossIterator iteration"){
+TEST_CASE("4. MagicalContainer::SideCrossIterator iteration"){
     MagicalContainer mc = createContainer();
-    SideCrossIterator sci(mc);
+    MagicalContainer::SideCrossIterator sci(mc);
 
     int cnt = 0;
     int values[] = {0, 9, 1, 8, 2, 7, 3, 6, 4, 5};
@@ -93,9 +94,9 @@ TEST_CASE("4. SideCrossIterator iteration"){
     }
 }
 
-TEST_CASE("5. PrimeIterator iteration"){
+TEST_CASE("5. MagicalContainer::PrimeIterator iteration"){
     MagicalContainer mc = createContainer();
-    PrimeIterator pi(mc);
+    MagicalContainer::PrimeIterator pi(mc);
 
     int cnt = 0;
     int values[] = {2, 3, 5, 7};
@@ -108,9 +109,9 @@ TEST_CASE("5. PrimeIterator iteration"){
 
 TEST_CASE("6. Empty Iteration"){
     MagicalContainer mc = MagicalContainer();
-    AscendingIterator ai(mc);
-    SideCrossIterator sci(mc);
-    PrimeIterator pi(mc);
+    MagicalContainer::AscendingIterator ai(mc);
+    MagicalContainer::SideCrossIterator sci(mc);
+    MagicalContainer::PrimeIterator pi(mc);
 
     CHECK_EQ(mc.size(), 0);
 
@@ -141,20 +142,20 @@ TEST_CASE("7. Empty Container"){
 TEST_CASE("8. O1 Space complexty"){
     MagicalContainer mc = createContainer();
 
-    AscendingIterator ai(mc);
+    MagicalContainer::AscendingIterator ai(mc);
     int cnt = 0;
     for(auto it = ai.begin(); it != ai.end(); ++it){
         CHECK_EQ(*it, cnt++);
     }
 
-    SideCrossIterator sci(mc);
+    MagicalContainer::SideCrossIterator sci(mc);
     cnt = 0;
     int values1[] = {0, 9, 1, 8, 2, 7, 3, 6, 4, 5};
     for(auto it = sci.begin(); it != sci.end(); ++it){
         CHECK_EQ(*it, values1[cnt++]);
     }
 
-    PrimeIterator pi(mc);
+    MagicalContainer::PrimeIterator pi(mc);
     cnt = 0;
     int values2[] = {2, 3, 5, 7};
     for(auto it = pi.begin(); it != pi.end(); ++it){
@@ -178,9 +179,9 @@ TEST_CASE("8. O1 Space complexty"){
     CHECK_EQ(cnt, 0);
 }
 
-TEST_CASE("9. Changing AscendingIterator mid iteration"){
+TEST_CASE("9. Changing MagicalContainer::AscendingIterator mid iteration"){
     MagicalContainer mc = createContainer();
-    AscendingIterator ai(mc);
+    MagicalContainer::AscendingIterator ai(mc);
 
     mc.removeElement(3);
     CHECK_EQ(mc.size(), 9);
@@ -195,9 +196,9 @@ TEST_CASE("9. Changing AscendingIterator mid iteration"){
     }
 }
 
-TEST_CASE("10. Changing SideCrossIterator mid iteration"){
+TEST_CASE("10. Changing MagicalContainer::SideCrossIterator mid iteration"){
     MagicalContainer mc = createContainer();
-    SideCrossIterator sci(mc);
+    MagicalContainer::SideCrossIterator sci(mc);
 
     mc.removeElement(3);
     CHECK_EQ(mc.size(), 9);
@@ -213,9 +214,9 @@ TEST_CASE("10. Changing SideCrossIterator mid iteration"){
     }
 }
 
-TEST_CASE("11. Changing SideCrossIterator mid iteration"){
+TEST_CASE("11. Changing MagicalContainer::SideCrossIterator mid iteration"){
     MagicalContainer mc = createContainer();
-    PrimeIterator pi(mc);
+    MagicalContainer::PrimeIterator pi(mc);
 
     mc.removeElement(3);
     CHECK_EQ(mc.size(), 9);
@@ -230,10 +231,10 @@ TEST_CASE("11. Changing SideCrossIterator mid iteration"){
     }
 }
 
-TEST_CASE("12. AscendingIterator comparisons"){
+TEST_CASE("12. MagicalContainer::AscendingIterator comparisons"){
     MagicalContainer mc = createContainer();
-    AscendingIterator iter1(mc);
-    AscendingIterator iter2(mc);
+    MagicalContainer::AscendingIterator iter1(mc);
+    MagicalContainer::AscendingIterator iter2(mc);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -259,10 +260,10 @@ TEST_CASE("12. AscendingIterator comparisons"){
     CHECK_FALSE(it1 > it2);
 }
 
-TEST_CASE("13. SideCrossIterator comparisons"){
+TEST_CASE("13. MagicalContainer::SideCrossIterator comparisons"){
     MagicalContainer mc = createContainer();
-    SideCrossIterator iter1(mc);
-    SideCrossIterator iter2(mc);
+    MagicalContainer::SideCrossIterator iter1(mc);
+    MagicalContainer::SideCrossIterator iter2(mc);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -288,10 +289,10 @@ TEST_CASE("13. SideCrossIterator comparisons"){
     CHECK_FALSE(it1 > it2);
 }
 
-TEST_CASE("14. PrimeIterator comparisons"){
+TEST_CASE("14. MagicalContainer::PrimeIterator comparisons"){
     MagicalContainer mc = createContainer();
-    PrimeIterator iter1(mc);
-    PrimeIterator iter2(mc);
+    MagicalContainer::PrimeIterator iter1(mc);
+    MagicalContainer::PrimeIterator iter2(mc);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -317,11 +318,11 @@ TEST_CASE("14. PrimeIterator comparisons"){
     CHECK_FALSE(it1 > it2);
 }
 
-TEST_CASE("15. Different Containers AscendingIterator comparisons"){
+TEST_CASE("15. Different Containers MagicalContainer::AscendingIterator comparisons"){
     MagicalContainer mc1 = createContainer();
     MagicalContainer mc2 = createContainer();
-    AscendingIterator iter1(mc1);
-    AscendingIterator iter2(mc2);
+    MagicalContainer::AscendingIterator iter1(mc1);
+    MagicalContainer::AscendingIterator iter2(mc2);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -350,11 +351,11 @@ TEST_CASE("15. Different Containers AscendingIterator comparisons"){
     CHECK_THROWS(b = it1 > it2);
 }
 
-TEST_CASE("16. Different Containers SideCrossIterator comparisons"){
+TEST_CASE("16. Different Containers MagicalContainer::SideCrossIterator comparisons"){
     MagicalContainer mc1 = createContainer();
     MagicalContainer mc2 = createContainer();
-    SideCrossIterator iter1(mc1);
-    SideCrossIterator iter2(mc2);
+    MagicalContainer::SideCrossIterator iter1(mc1);
+    MagicalContainer::SideCrossIterator iter2(mc2);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -383,11 +384,11 @@ TEST_CASE("16. Different Containers SideCrossIterator comparisons"){
     CHECK_THROWS(b = it1 > it2);
 }
 
-TEST_CASE("17. Different Containers PrimeIterator comparisons"){
+TEST_CASE("17. Different Containers MagicalContainer::PrimeIterator comparisons"){
     MagicalContainer mc1 = createContainer();
     MagicalContainer mc2 = createContainer();
-    PrimeIterator iter1(mc1);
-    PrimeIterator iter2(mc2);
+    MagicalContainer::PrimeIterator iter1(mc1);
+    MagicalContainer::PrimeIterator iter2(mc2);
     
     auto it1 = iter1.begin();
     auto it2 = iter2.begin();
@@ -416,11 +417,11 @@ TEST_CASE("17. Different Containers PrimeIterator comparisons"){
     CHECK_THROWS(b = it1 > it2);
 }
 
-TEST_CASE("18. PrimeIterator only primes"){
+TEST_CASE("18. MagicalContainer::PrimeIterator only primes"){
     int size = 1000;
 
     MagicalContainer mc = createContainer(true, size);
-    PrimeIterator iter(mc);
+    MagicalContainer::PrimeIterator iter(mc);
 
     for(auto it = iter.begin(); it != iter.end(); ++it){
         CHECK(isPrime(*it));
@@ -430,17 +431,17 @@ TEST_CASE("18. PrimeIterator only primes"){
 TEST_CASE("19. Different Constructors"){
     MagicalContainer mc = createContainer();
 
-    PrimeIterator pi1(mc);
-    PrimeIterator pi2(pi1);
-    PrimeIterator pi3 = pi2;
+    MagicalContainer::PrimeIterator pi1(mc);
+    MagicalContainer::PrimeIterator pi2(pi1);
+    MagicalContainer::PrimeIterator pi3 = pi2;
 
     for(auto it = pi3.begin(); it != pi3.end(); ++it){
         CHECK(isPrime(*it));
     }
 
-    SideCrossIterator sci1(mc);
-    SideCrossIterator sci2(sci1);
-    SideCrossIterator sci3 = sci2;
+    MagicalContainer::SideCrossIterator sci1(mc);
+    MagicalContainer::SideCrossIterator sci2(sci1);
+    MagicalContainer::SideCrossIterator sci3 = sci2;
 
     int cnt = 0;
     int values1[] = {0, 9, 1, 8, 2, 7, 3, 6, 4, 5};
@@ -448,9 +449,9 @@ TEST_CASE("19. Different Constructors"){
         CHECK_EQ(*it, values1[cnt++]);
     }
 
-    AscendingIterator ai1(mc);
-    AscendingIterator ai2(ai1);
-    AscendingIterator ai3 = ai2;
+    MagicalContainer::AscendingIterator ai1(mc);
+    MagicalContainer::AscendingIterator ai2(ai1);
+    MagicalContainer::AscendingIterator ai3 = ai2;
 
     cnt = 0;
     for(auto it = ai2.begin(); it != ai2.end(); ++it){
